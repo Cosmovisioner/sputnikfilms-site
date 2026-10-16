@@ -1734,9 +1734,26 @@ body.land-main.land-oswald .statement {
 
   .land .awards-wall {
     max-width: 100%;
+    overflow: hidden;
   }
 
   .land .award-pill__name {
     font-size: clamp(28px, 9vw, 48px);
+  }
+
+  /* meta не торчит за край (не полагаемся только на hover: none) */
+  .land .award-pill__meta {
+    position: static;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 0.7;
+    margin-top: 4px;
+    padding: 0;
+    background: transparent;
+    white-space: normal;
+    max-width: 100%;
+    width: auto;
+    text-align: center !important;
   }
 }
