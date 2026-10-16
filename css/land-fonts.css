@@ -963,9 +963,18 @@ body.land-dense .work-frame img {
   }
 
   .land .about--tight .about-shot {
-    width: min(100%, 360px);
+    width: 100%;
     max-width: none;
     justify-self: stretch;
+  }
+
+  .land .about--tight .about-copy {
+    transform: none;
+    text-align: left;
+  }
+
+  .land .about--tight .about-copy p {
+    text-align: left;
   }
 }
 
@@ -1522,6 +1531,8 @@ body.land-main.land-oswald .statement {
   gap: clamp(14px, 2vh, 24px);
   align-items: flex-start;
   background: transparent;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .land .contact-finale__label {
@@ -1539,7 +1550,7 @@ body.land-main.land-oswald .statement {
 .land .contact-finale__tg {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(36px, 7vw, 72px);
+  font-size: clamp(28px, 5.5vw, 72px);
   line-height: 0.95;
   letter-spacing: -0.03em;
   text-transform: uppercase;
@@ -1547,9 +1558,185 @@ body.land-main.land-oswald .statement {
   color: inherit;
   border-bottom: 2px solid transparent;
   transition: border-color 0.25s ease, color 0.25s ease;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .land .contact-finale__mail:hover,
 .land .contact-finale__tg:hover {
   border-bottom-color: currentColor;
+}
+
+/* ——— Мобилка: полный лист, без обрезаний ——— */
+@media (max-width: 720px) {
+  body.land {
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .land .sheet {
+    border-left: 0;
+    border-right: 0;
+    min-height: 100vh;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .land {
+    --sheet-pad: clamp(14px, 4vw, 20px);
+  }
+
+  /* меню: 2+2, контакты на всю ширину — без пустой ячейки */
+  .land .rail {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .land .rail a {
+    border-right: 1px solid var(--ink);
+    min-height: 44px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    white-space: normal;
+    line-height: 1.15;
+    padding: 10px 6px;
+  }
+
+  .land .rail a:nth-child(2n) { border-right: 0; }
+
+  .land .rail a:nth-child(n + 3) {
+    border-top: 1px solid var(--ink);
+  }
+
+  .land .rail a:last-child {
+    grid-column: 1 / -1;
+    border-right: 0;
+  }
+
+  /* мачта: слова рядом, не по краям */
+  .land .nameplate,
+  body.land-oswald .nameplate,
+  body.land-main.land-oswald .nameplate {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.12em;
+    font-size: clamp(42px, 14vw, 64px);
+    line-height: 0.88;
+  }
+
+  .land .name-l,
+  .land .name-r {
+    white-space: nowrap;
+  }
+
+  .land .hero-pin {
+    padding-top: clamp(24px, 5vh, 36px);
+    padding-bottom: clamp(32px, 6vh, 48px);
+    min-height: 0;
+  }
+
+  .land .hero-corners {
+    margin-top: clamp(20px, 3vh, 28px);
+  }
+
+  .land .hero-void {
+    min-height: clamp(28px, 5vh, 56px);
+  }
+
+  body.land-main.land-oswald .statement,
+  .land .statement {
+    font-size: clamp(15px, 4.2vw, 18px);
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+  }
+
+  .land .statement span {
+    white-space: normal;
+  }
+
+  /* паузы между разделами компактнее */
+  .land .section-break {
+    min-height: clamp(72px, 14vh, 120px);
+    padding: clamp(36px, 7vh, 64px) var(--sheet-pad);
+  }
+
+  .land .section-break--finale {
+    min-height: clamp(88px, 16vh, 140px);
+    padding: clamp(40px, 8vh, 72px) var(--sheet-pad);
+  }
+
+  .land .section-label {
+    font-size: clamp(15px, 3.8vw, 20px);
+  }
+
+  /* О нас: убрать сдвиг, который режет текст слева */
+  .land .about--tight .about-copy {
+    transform: none;
+    max-width: none;
+    width: 100%;
+    text-align: left;
+    justify-self: stretch;
+  }
+
+  .land .about--tight .about-copy p {
+    text-align: left;
+    hyphens: none;
+    overflow-wrap: break-word;
+  }
+
+  .land .about--tight .about-shot {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .land .about--tight .about-shot--dna,
+  .land .about--tight .about-shot--copy {
+    justify-self: stretch;
+    margin-left: 0;
+  }
+
+  .land .about-lead {
+    font-size: clamp(32px, 9vw, 48px);
+  }
+
+  .land .projects {
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .land .contact-finale {
+    padding: 0 var(--sheet-pad) clamp(40px, 8vh, 72px);
+    align-items: stretch;
+  }
+
+  .land .contact-finale__mail,
+  .land .contact-finale__tg {
+    font-size: clamp(22px, 7.2vw, 36px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .land .site-foot {
+    padding: 16px var(--sheet-pad);
+    gap: 8px 12px;
+  }
+
+  .land .site-foot__legal {
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    line-height: 1.35;
+  }
+
+  .land .awards-wall {
+    max-width: 100%;
+  }
+
+  .land .award-pill__name {
+    font-size: clamp(28px, 9vw, 48px);
+  }
 }

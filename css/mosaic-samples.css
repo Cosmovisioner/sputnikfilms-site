@@ -478,9 +478,46 @@ body.overlay-open { overflow: hidden; }
 .ms-b .tile--strip3 .bg { display: none; }
 
 @media (max-width: 720px) {
-  .ms-b .grid { grid-template-columns: 1fr; }
+  .ms-b .grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
   .ms-b .tile,
-  .ms-b .tile--end { border-right: 0; }
+  .ms-b .tile--end,
+  .ms-b .tile--hero {
+    border-right: 0;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .ms-b .tile .tile-copy,
+  .ms-b .tile .meta {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .ms-b .tile .kicker {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+
+  .ms-b .tile .name,
+  .ms-b .tile--hero .name {
+    font-size: clamp(22px, 6.5vw, 34px);
+    max-width: 100%;
+  }
+
+  .ms-b .tile .name.name--stacked .name-line:last-child,
+  .ms-b .tile--hero .name.name--stacked .name-line:last-child {
+    padding-left: 0;
+  }
+
+  .ms-b .tile--strip3 .strip3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 /* ——— C Layer ——— */
