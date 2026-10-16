@@ -1,0 +1,1555 @@
+/* Общая оболочка лендингов-фаворитов + две витрины */
+
+body.land {
+  --font-display: sans-serif;
+  --font-text: Onest, system-ui, sans-serif;
+  --sheet-pad: clamp(20px, 2.8vw, 40px);
+  --paper: #ffffff;
+  background: #ffffff;
+  padding: 20px;
+  color: var(--ink);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(17, 17, 17, 0.35) transparent;
+}
+
+body.land::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+body.land::-webkit-scrollbar-track,
+body.land::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+body.land::-webkit-scrollbar-thumb {
+  background: rgba(17, 17, 17, 0.35);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+body.land::-webkit-scrollbar-thumb:hover {
+  background: rgba(17, 17, 17, 0.55);
+  background-clip: padding-box;
+}
+
+body.land::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+body.land-full {
+  background: #0a0a0a;
+  padding: 0;
+  color: #fff;
+}
+
+.land .sheet {
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  min-height: calc(100vh - 40px);
+}
+
+/* KOBA-ячейки — настоящее меню сайта */
+.land .rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-bottom: 1px solid var(--ink);
+}
+
+.land .rail a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 8px;
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-right: 1px solid var(--ink);
+  white-space: nowrap;
+}
+
+.land .rail a:last-child {
+  border-right: 0;
+  background: var(--ink);
+  color: #fff;
+}
+
+.land .rail a:hover { color: var(--wine); }
+
+.land .rail a:last-child:hover {
+  background: var(--wine);
+  color: #fff;
+}
+
+.land .land-switch {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.land-main .land-switch { display: none; }
+
+.land .land-switch a {
+  padding: 12px 14px;
+  border-right: 1px solid var(--ink);
+  color: var(--mute);
+}
+
+.land .land-switch a.is-on {
+  color: var(--ink);
+  background: #f0f0ed;
+}
+
+.land .land-switch a:hover { color: var(--ink); }
+
+.land-full .land-switch {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.land-full .land-switch a {
+  border-right: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.land-full .land-switch a.is-on,
+.land-full .land-switch a:hover { color: #fff; background: transparent; }
+
+/* ——— Hero ——— */
+.land .hero-pin {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(32px, 4.5vw, 60px) var(--sheet-pad) 0;
+  min-height: calc(100vh - 88px);
+  box-sizing: border-box;
+}
+
+.land .nameplate {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: clamp(20px, 6vw, 96px);
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  font-size: 10vw;
+}
+
+.land .name-l,
+.land .name-r { white-space: nowrap; }
+
+.land .hero-corners {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  margin-top: clamp(36px, 5.5vh, 64px);
+}
+
+.land .hero-meta-l,
+.land .hero-meta-r {
+  margin: 0;
+  font-family: var(--font-meta);
+  font-size: clamp(13px, 1.15vw, 16px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.land .hero-meta-r { text-align: right; }
+
+.land .hero-void {
+  flex: 1 1 auto;
+  min-height: clamp(72px, 12vh, 180px);
+}
+
+.land .statement {
+  margin: 0;
+  padding-bottom: 0;
+  max-width: none;
+  font-family: var(--font-text);
+  font-size: clamp(18px, 2.05vw, 30px);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.land .statement span {
+  display: block;
+  white-space: nowrap;
+}
+
+.land .hero-pin {
+  padding-bottom: clamp(48px, 8vh, 96px);
+}
+
+/* Воздух-глава: подпись ровно посередине паузы между разделами */
+.land .section-air {
+  height: clamp(80px, 14vh, 140px);
+  border: 0;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* Глава между блоками: полоска + подпись в скобках, больше воздуха */
+.land .section-break {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(140px, 24vh, 240px);
+  padding: clamp(64px, 12vh, 120px) var(--sheet-pad);
+  box-sizing: border-box;
+}
+
+.land .section-break::before {
+  content: "";
+  position: absolute;
+  left: var(--sheet-pad);
+  right: var(--sheet-pad);
+  top: 50%;
+  height: 1px;
+  background: var(--ink);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.land .section-break .section-label {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  padding: 0 0.9em;
+}
+
+/* Контакты после стены наград — чуть шире пауза */
+.land .section-break--finale {
+  min-height: clamp(168px, 28vh, 280px);
+  padding: clamp(72px, 14vh, 140px) var(--sheet-pad);
+}
+
+/* Подпись раздела — в скобках, чёрная; мельче display внутри блоков */
+.land .section-label {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  text-align: center;
+  font-family: Oswald, "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(18px, 2.1vw, 26px);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.land .section-label::before {
+  content: "(";
+  margin-right: 0.12em;
+  letter-spacing: 0;
+}
+
+.land .section-label::after {
+  content: ")";
+  margin-left: 0.12em;
+  letter-spacing: 0;
+}
+
+/* Услуги — список строк, hover инверсия */
+.land .services {
+  padding: 0 var(--sheet-pad);
+}
+
+.land .services-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.land .services-list li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.land .service-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  align-items: baseline;
+  gap: clamp(16px, 3vw, 40px);
+  padding: clamp(28px, 4.5vh, 48px) clamp(12px, 2vw, 24px);
+  transition: background 0.25s ease, color 0.25s ease;
+  color: var(--ink);
+  cursor: default;
+}
+
+.land .service-item:hover {
+  background: #111;
+  color: #fff;
+}
+
+.land .service-num {
+  font-family: Oswald, "Arial Narrow", sans-serif;
+  font-weight: 500;
+  font-size: clamp(14px, 1.4vw, 18px);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.land .service-item:hover .service-num {
+  opacity: 0.75;
+}
+
+.land .service-row {
+  margin: 0;
+  font-family: Oswald, "Arial Narrow", sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 4.5vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+/* Глава: один такт экрана. Воздух — внутри главы, не второй раз перед работой. */
+.land .projects-chapter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100svh - 40px);
+  padding: 0 var(--sheet-pad);
+  box-sizing: border-box;
+}
+
+.land .projects-mast {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.02em;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(56px, 14vw, 160px);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.2;
+  transform: scale(0.88);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.land .projects-mast span {
+  display: block;
+}
+
+/* ——— Работы: ритм 2 / 1 / 2 (канон 2026-10-07) ——— */
+.land .projects {
+  padding: 0 var(--sheet-pad);
+}
+
+.land .mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.land .mosaic .tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  aspect-ratio: 16 / 9;
+}
+
+.land .mosaic .tile:nth-child(2n) { border-right: 0; }
+
+.land .mosaic .tile--hero {
+  grid-column: 1 / -1;
+  border-right: 0;
+  aspect-ratio: 16 / 9;
+}
+
+.land .mosaic .tile .bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.land .mosaic .tile:hover .bg { transform: scale(1); }
+
+.land .mosaic .tile .shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 42%, rgba(0, 0, 0, 0.72) 100%);
+  pointer-events: none;
+}
+
+.land .mosaic .tile .tl,
+.land .mosaic .tile .tr,
+.land .mosaic .tile .bl,
+.land .mosaic .tile .br {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.land .mosaic .tile .tl {
+  top: clamp(14px, 3%, 22px);
+  left: clamp(14px, 2.5%, 22px);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.land .mosaic .tile .tr {
+  top: clamp(14px, 3%, 22px);
+  right: clamp(14px, 2.5%, 22px);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.land .mosaic .tile .bl {
+  left: clamp(14px, 2.5%, 22px);
+  bottom: clamp(14px, 3%, 22px);
+  right: clamp(64px, 10%, 120px);
+  max-width: 16em;
+}
+
+.land .mosaic .tile--hero .bl { max-width: 18em; }
+
+.land .mosaic .tile .br {
+  right: clamp(14px, 2.5%, 22px);
+  bottom: clamp(16px, 3.5%, 24px);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+.land .mosaic .tile .name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.8vw, 36px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.land .mosaic .tile .name.name--stacked {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06em;
+}
+
+.land .mosaic .tile .name .name-line {
+  display: block;
+}
+
+.land .mosaic .tile .name.name--stacked .name-line:last-child {
+  padding-left: 0.12em;
+}
+
+.land .mosaic .tile--hero .name {
+  font-size: clamp(36px, 5.5vw, 64px);
+}
+
+.land .mosaic .tile--hero .name.name--stacked .name-line:last-child {
+  padding-left: 0.18em;
+}
+
+.land .mosaic .tile .lead {
+  margin: 8px 0 0;
+  font-family: var(--font-text);
+  font-size: clamp(12px, 1.1vw, 14px);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 28em;
+}
+
+.land .mosaic .tile:not(.tile--hero) .name {
+  font-size: clamp(20px, 2.4vw, 30px);
+}
+
+.land .mosaic .tile:not(.tile--hero) .lead {
+  font-size: 12px;
+  max-width: 22em;
+}
+
+.land .work-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: stretch;
+  min-height: clamp(300px, 42vh, 520px);
+  padding: clamp(64px, 12vh, 140px) 0;
+  color: inherit;
+}
+
+/* Пробная плотная сетка — снять класс land-dense с body, чтобы вернуть воздух */
+body.land-dense .projects {
+  padding-top: 0;
+}
+
+body.land-dense .work-row {
+  min-height: 0;
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+  padding: clamp(18px, 2.4vh, 28px) 0;
+}
+
+body.land-dense .work-copy {
+  gap: 18px;
+  padding: 0;
+}
+
+body.land-dense .work-frame img {
+  max-height: min(380px, 42vh);
+}
+
+.land .work-row--flip .work-copy { order: 2; }
+.land .work-row--flip .work-frame { order: 1; }
+
+.land .work-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  min-height: 100%;
+  padding: 4px 0 8px;
+  gap: 32px;
+}
+
+.land .work-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.land .work-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  max-width: 34em;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.land .work-kicker {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+
+.land .work-name {
+  margin: 0;
+  max-width: 11ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(36px, 5.2vw, 68px);
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.land .work-name--long {
+  max-width: 16ch;
+  font-size: clamp(28px, 3.8vw, 48px);
+  line-height: 0.95;
+}
+
+.land .work-lead {
+  margin: 0;
+  max-width: 28em;
+  font-family: var(--font-text);
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: rgba(17, 17, 17, 0.7);
+}
+
+.land .work-go {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.land .work-go-arrow {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: currentColor;
+  position: relative;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.land .work-go-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid currentColor;
+  border-top: 1px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.land .work-frame {
+  margin: 0;
+  display: block;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  align-self: center;
+}
+
+.land .work-frame img {
+  width: 100%;
+  max-height: min(460px, 54vh);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  background: #111;
+  transform: scale(1);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.land .work-row:hover .work-frame img {
+  transform: scale(1.04);
+}
+
+.land .work-row:hover .work-go-arrow {
+  width: 68px;
+}
+
+.land .work-row:hover .work-bottom {
+  transform: translateY(-4px);
+}
+
+/* ——— О нас: один слайд, четыре угла ———
+   TL лид · TR кадр (верх вровень)
+   BL кадр · BR текст (низы вровень)
+*/
+.land .about {
+  position: relative;
+  padding: 0 var(--sheet-pad);
+  overflow: visible;
+}
+
+.land .about-kicker {
+  display: none; /* титул — section-banner */
+}
+
+.land .about-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: clamp(28px, 4vw, 56px);
+  row-gap: clamp(32px, 6vh, 72px);
+  width: 100%;
+  min-height: clamp(520px, 68vh, 780px);
+  align-content: space-between;
+}
+
+.land .about-lead {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  margin: 0;
+  text-align: left;
+  font-family: Oswald, "Arial Narrow", sans-serif;
+  font-weight: 700;
+  font-size: clamp(40px, 6.4vw, 88px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  max-width: 12ch;
+}
+
+.land .about-lead span {
+  display: block;
+}
+
+/* «ДНК —» не рвём: тире не уезжает на следующую строку */
+.land .about-lead__keep {
+  white-space: nowrap;
+}
+
+.land .about-shot {
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.land .about-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.land .about-shot--dna {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin-top: 0;
+}
+
+.land .about-shot--copy {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
+}
+
+.land .about-copy {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  border-top: 0;
+  padding-top: 0;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -ms-hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.land .about-copy p {
+  margin: 0 0 1.05em;
+  font-family: var(--font-text);
+  font-size: clamp(15px, 1.2vw, 17.5px);
+  font-weight: 400;
+  line-height: 1.58;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  text-align: justify;
+  color: var(--ink);
+}
+
+.land .about-copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* ——— О нас · одно окно: жёстко в 100dvh ——— */
+.land .section-air--tight {
+  height: clamp(40px, 6vh, 72px);
+}
+
+.land .about--fit {
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 100dvh;
+  padding: clamp(12px, 2vh, 22px) var(--sheet-pad) clamp(14px, 2.4vh, 28px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.land .about--fit .about-kicker {
+  margin: 0 0 clamp(6px, 1vh, 12px);
+  flex: 0 0 auto;
+}
+
+.land .about--fit .about-spread {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  row-gap: clamp(10px, 2vh, 24px);
+  column-gap: clamp(20px, 3vw, 40px);
+  align-content: stretch;
+}
+
+.land .about--fit .about-lead {
+  font-size: clamp(28px, 5.4vh, 68px);
+  max-width: 12ch;
+}
+
+.land .about--fit .about-shot {
+  aspect-ratio: auto;
+  min-height: 0;
+  height: 100%;
+  align-self: stretch;
+}
+
+.land .about--fit .about-shot--dna {
+  align-self: stretch;
+}
+
+.land .about--fit .about-shot--copy {
+  align-self: stretch;
+}
+
+.land .about--fit .about-copy {
+  align-self: end;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+  text-align: justify;
+}
+
+/* второй вариант как был: компактный кегль под 100dvh */
+.land .about--fit .about-copy p {
+  font-size: clamp(12px, 1.55vh, 16px);
+  line-height: 1.42;
+  margin: 0 0 0.7em;
+  letter-spacing: 0.01em;
+  text-align: justify;
+}
+
+.land .about--fit .about-copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* ——— О нас · плотнее: как было + лёгкий сдвиг влево низа ——— */
+.land .about--tight .about-spread {
+  column-gap: clamp(10px, 1.2vw, 18px);
+  row-gap: clamp(16px, 2.8vh, 32px);
+  min-height: 0;
+  align-content: start;
+}
+
+.land .about--tight .about-shot {
+  width: min(78%, 340px);
+  max-width: 340px;
+  aspect-ratio: 3 / 2;
+  height: auto;
+}
+
+.land .about--tight .about-shot--dna {
+  justify-self: end; /* правый верхний угол листа */
+  align-self: start;
+  margin-top: 0;
+}
+
+.land .about--tight .about-shot--copy {
+  /* под лидом слева с лёгким отступом — правый край не совпадает с левым краем верхнего кадра */
+  justify-self: start;
+  align-self: end;
+  margin-left: clamp(4px, 1vw, 16px);
+  transform: none;
+}
+
+.land .about--tight .about-copy {
+  justify-self: start;
+  align-self: end;
+  max-width: 28rem;
+  text-align: justify;
+  /* влево от левого края верхнего кадра — зигзаг, без общей вертикали */
+  transform: translateX(clamp(-104px, -11vw, -72px));
+}
+
+.land .about--tight .about-copy p {
+  text-align: justify;
+}
+
+@media (max-width: 820px) {
+  .land .about-spread {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    min-height: 0;
+    align-content: start;
+    row-gap: clamp(24px, 5vh, 40px);
+  }
+
+  .land .about-lead,
+  .land .about-shot--dna,
+  .land .about-shot--copy,
+  .land .about-copy {
+    grid-column: 1;
+    grid-row: auto;
+    align-self: stretch;
+    max-width: none;
+  }
+
+  .land .about-lead {
+    font-size: clamp(40px, 11vw, 64px);
+  }
+
+  .land .about-lead__keep {
+    white-space: normal;
+  }
+
+  .land .about--fit {
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .land .about--fit .about-spread {
+    height: auto;
+    grid-template-rows: none;
+  }
+
+  .land .about--fit .about-shot {
+    aspect-ratio: 3 / 2;
+    height: auto;
+  }
+
+  .land .about--fit .about-lead {
+    font-size: clamp(36px, 10vw, 56px);
+  }
+
+  .land .about--fit .about-copy {
+    overflow: visible;
+    max-height: none;
+  }
+
+  .land .about--tight .about-shot {
+    width: min(100%, 360px);
+    max-width: none;
+    justify-self: stretch;
+  }
+}
+
+/* ——— Награды: типографическая стена (жест vs Zebra, наш Oswald) ——— */
+.land .awards {
+  position: relative;
+  padding: 0 var(--sheet-pad) clamp(12px, 3vh, 36px);
+  text-align: center;
+  overflow: visible;
+}
+
+.land .awards-kicker {
+  display: none;
+  position: absolute;
+  top: clamp(20px, 3vh, 36px);
+  left: var(--sheet-pad);
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  pointer-events: none;
+}
+
+.land .awards-wall {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: min(920px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+.land .awards-wall li {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}
+
+/* иначе следующая строка стены рисуется поверх meta */
+.land .awards-wall li:hover,
+.land .awards-wall li:focus-within {
+  z-index: 40;
+}
+
+.land .award-pill {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  position: relative;
+  margin: 0;
+  padding: 0.02em 0.12em;
+  cursor: pointer;
+  text-align: center;
+  color: var(--ink);
+  max-width: 100%;
+  overflow: visible;
+}
+
+.land .award-pill:hover,
+.land .award-pill:focus-visible {
+  outline: none;
+}
+
+.land .award-pill__name {
+  display: block;
+  font-family: Oswald, "Arial Narrow", sans-serif;
+  font-weight: 700;
+  font-size: clamp(36px, 7.2vw, 84px);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+/*
+  Meta = маргиналия вбок по диагонали, не бейдж между строками.
+  Нечётные → вправо-вниз; чётные → влево-вниз.
+*/
+.land .award-pill__meta {
+  position: absolute;
+  top: 62%;
+  width: max-content;
+  max-width: min(42vw, 16rem);
+  margin: 0;
+  padding: 0.2em 0.45em;
+  font-family: Onest, system-ui, sans-serif;
+  font-size: clamp(10px, 1.05vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+  background: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50;
+  transition:
+    opacity 0.2s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.2s ease;
+}
+
+.land .awards-wall li:nth-child(odd) .award-pill__meta {
+  left: 100%;
+  right: auto;
+  transform: translate(0.15em, -0.15em);
+  text-align: left;
+}
+
+.land .awards-wall li:nth-child(even) .award-pill__meta {
+  right: 100%;
+  left: auto;
+  transform: translate(-0.15em, -0.15em);
+  text-align: right;
+}
+
+.land .awards-wall li:nth-child(odd) .award-pill:hover .award-pill__meta,
+.land .awards-wall li:nth-child(odd) .award-pill:focus-visible .award-pill__meta {
+  opacity: 1;
+  color: var(--ink);
+  transform: translate(0.55em, 0.55em);
+}
+
+.land .awards-wall li:nth-child(even) .award-pill:hover .award-pill__meta,
+.land .awards-wall li:nth-child(even) .award-pill:focus-visible .award-pill__meta {
+  opacity: 1;
+  color: var(--ink);
+  transform: translate(-0.55em, 0.55em);
+}
+
+@media (max-width: 720px) {
+  /* на узком экране бок может упираться в край — чуть ближе к имени */
+  .land .awards-wall li:nth-child(odd) .award-pill:hover .award-pill__meta,
+  .land .awards-wall li:nth-child(odd) .award-pill:focus-visible .award-pill__meta {
+    transform: translate(0.2em, 0.7em);
+  }
+
+  .land .awards-wall li:nth-child(even) .award-pill:hover .award-pill__meta,
+  .land .awards-wall li:nth-child(even) .award-pill:focus-visible .award-pill__meta {
+    transform: translate(-0.2em, 0.7em);
+  }
+}
+
+@media (hover: none) {
+  .land .award-pill__meta {
+    position: static;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    opacity: 0.7;
+    margin-top: 4px;
+    padding: 0;
+    background: transparent;
+    white-space: normal;
+    max-width: none;
+    text-align: center !important;
+  }
+}
+
+/* курсор на весь ленд: белый круг + difference */
+body.land.site-cursor-on,
+body.land.site-cursor-on * {
+  cursor: none !important;
+}
+
+.site-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* единый размер — как на ховере в наградах */
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 400;
+  opacity: 0;
+  background: #fff;
+  mix-blend-mode: difference;
+  transform: translate3d(-100px, -100px, 0);
+  transition: opacity 0.2s ease;
+  will-change: transform;
+}
+
+.site-cursor.is-on { opacity: 1; }
+
+.site-cursor.is-hot {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .site-cursor { display: none; }
+  body.land.site-cursor-on,
+  body.land.site-cursor-on * {
+    cursor: auto !important;
+  }
+}
+
+.land .after {
+  padding: clamp(40px, 7vh, 80px) var(--sheet-pad);
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+
+.land .section-kicker {
+  display: none;
+  margin: 0 0 14px;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.land .after h2 {
+  margin: 0 0 14px;
+  max-width: 16ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.land .after p {
+  margin: 0;
+  max-width: 36em;
+  font-family: var(--font-text);
+  color: var(--mute);
+}
+
+.land .contact-line {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.land .contact-line a { color: inherit; }
+
+.land .contact-tg {
+  margin-top: 14px;
+  font-family: var(--font-text);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.land .contact-tg a { border-bottom: 1px solid currentColor; }
+
+.land .site-foot {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px 20px;
+  padding: 22px var(--sheet-pad);
+  border-top: 1px solid var(--ink);
+  font-family: var(--font-text);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.land .site-foot__brand {
+  justify-self: start;
+}
+
+.land .site-foot__legal {
+  justify-self: center;
+  text-align: center;
+  max-width: min(42ch, 100%);
+}
+
+.land .site-foot__year {
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .land .site-foot {
+    grid-template-columns: 1fr 1fr;
+    font-size: 11px;
+  }
+
+  .land .site-foot__legal {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-self: stretch;
+    max-width: none;
+  }
+
+  .land .site-foot__brand { order: 1; }
+  .land .site-foot__year { order: 2; }
+}
+
+.land .foot-quiet {
+  color: inherit;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.land .foot-quiet:hover { color: var(--ink); }
+
+/* ——— Full-screen works ——— */
+.land-full .hero-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 72px clamp(20px, 4vw, 48px) 40px;
+  background: #111;
+}
+
+.land-full .nameplate {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(36px, 8vw, 96px);
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.land-full .hero-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-family: var(--font-meta);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.land-full .statement {
+  margin: 0;
+  max-width: 28em;
+  font-family: var(--font-text);
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.land-full .scroll-hint {
+  margin: 24px 0 0;
+  font-family: var(--font-meta);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.land-full .film-panel {
+  position: relative;
+  display: block;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: #fff;
+  overflow: hidden;
+}
+
+.land-full .film-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.land-full .film-panel:hover .film-bg { transform: scale(1.06); }
+
+.land-full .film-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.72) 100%);
+}
+
+.land-full .film-copy {
+  position: absolute;
+  left: clamp(20px, 4vw, 48px);
+  right: clamp(20px, 4vw, 48px);
+  bottom: clamp(28px, 6vh, 56px);
+  z-index: 2;
+  max-width: 16em;
+}
+
+.land-full .film-kicker {
+  margin: 0 0 12px;
+  display: block;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.land-full .film-name {
+  margin: 0;
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.land-full .film-go {
+  display: inline-block;
+  margin-top: 22px;
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.land-full .site-foot {
+  display: flex;
+  justify-content: space-between;
+  padding: 28px clamp(20px, 4vw, 48px);
+  background: #0a0a0a;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-text);
+  font-size: 12px;
+}
+
+/* ——— Font packs ——— */
+body.land-archivo {
+  --font-display: Archivo, sans-serif;
+}
+
+body.land-archivo .nameplate,
+body.land-archivo .work-name,
+body.land-archivo .film-name,
+body.land-archivo .after h2 {
+  font-stretch: condensed;
+}
+
+body.land-oswald {
+  --font-display: Oswald, "Arial Narrow", sans-serif;
+  --font-text: Onest, system-ui, sans-serif;
+}
+
+.land .clients-line {
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+body.land-oswald .nameplate {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  font-size: clamp(48px, 11.5vw, 128px);
+  line-height: 0.84;
+}
+
+body.land-oswald.land-full .nameplate {
+  font-size: clamp(40px, 9vw, 104px);
+}
+
+body.land-oswald .work-name,
+body.land-oswald .film-name,
+body.land-oswald .after h2,
+body.land-oswald .contact-line {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* Основная: мачта плотнее по краям, statement — «блог» */
+body.land-main.land-oswald .nameplate {
+  gap: clamp(16px, 4vw, 64px);
+}
+
+body.land-main.land-oswald .statement {
+  font-size: clamp(20px, 2.15vw, 32px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 820px) {
+  .land .rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .land .rail a:nth-child(3n) { border-right: 0; }
+
+  .land .rail a:nth-child(n + 4) {
+    border-top: 1px solid var(--ink);
+  }
+
+  .land .work-row,
+  .land .work-row--flip {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 24px;
+  }
+  .land .work-row--flip .work-copy,
+  .land .work-row--flip .work-frame { order: unset; }
+  .land .hero-pin { min-height: auto; }
+  .land .statement span { white-space: normal; }
+  .land .work-name {
+    font-size: clamp(32px, 9vw, 48px);
+    max-width: 10ch;
+  }
+  .land .work-frame img { max-height: none; }
+
+  .land .mosaic { grid-template-columns: 1fr; }
+  .land .mosaic .tile,
+  .land .mosaic .tile:nth-child(2n) {
+    border-right: 0;
+  }
+  .land .mosaic .tile--hero .name {
+    font-size: clamp(28px, 8vw, 44px);
+  }
+}
+
+/* Финал контактов */
+.land .contact-finale {
+  padding: clamp(8px, 2vh, 24px) var(--sheet-pad) clamp(56px, 10vh, 104px);
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2vh, 24px);
+  align-items: flex-start;
+  background: transparent;
+}
+
+.land .contact-finale__label {
+  display: none;
+  margin: 0;
+  font-family: var(--font-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.land .contact-finale__mail,
+.land .contact-finale__tg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(36px, 7vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.land .contact-finale__mail:hover,
+.land .contact-finale__tg:hover {
+  border-bottom-color: currentColor;
+}

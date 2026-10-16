@@ -1,0 +1,579 @@
+/* Образцы витрины A / B / C + оверлей */
+
+:root {
+  --ink: #111;
+  --paper: #ffffff;
+  --mute: rgba(17, 17, 17, 0.55);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-display: Oswald, "Arial Narrow", sans-serif;
+  --font-text: Onest, system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body.mosaic-sample {
+  margin: 0;
+  background: #d9d4cc;
+  color: var(--ink);
+  font-family: var(--font-text);
+  padding: 16px;
+}
+
+body.overlay-open { overflow: hidden; }
+
+.mosaic-sample .sheet {
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  min-height: calc(100vh - 32px);
+}
+
+.ms-nav {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ms-nav a {
+  padding: 12px 14px;
+  border-right: 1px solid var(--ink);
+  color: var(--mute);
+  text-decoration: none;
+}
+
+.ms-nav a:hover,
+.ms-nav a.is-on { color: var(--ink); background: #efeae2; }
+
+.ms-nav .brand {
+  margin-left: auto;
+  border-right: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.ms-head {
+  padding: clamp(28px, 5vw, 48px) clamp(20px, 4vw, 40px) 20px;
+}
+
+.ms-head .tag {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.ms-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.ms-mount {
+  padding: clamp(8px, 1.5vh, 16px) clamp(16px, 3vw, 32px) clamp(48px, 8vh, 80px);
+}
+
+/* ——— Overlay ——— */
+.work-overlay[hidden] { display: none !important; }
+
+.work-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.work-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.72);
+  cursor: pointer;
+}
+
+.work-overlay__panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 1fr);
+  width: min(1180px, calc(100vw - 32px));
+  max-height: min(94vh, 900px);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  overflow: auto;
+  align-items: stretch;
+}
+
+.work-overlay__close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 2;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.work-overlay__media {
+  position: relative;
+  margin: 0;
+  background: #111;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: default;
+}
+
+.work-overlay__media.is-linked {
+  cursor: pointer;
+}
+
+.work-overlay__media.is-linked:hover .work-overlay__media-hint,
+.work-overlay__media.is-linked:focus-visible .work-overlay__media-hint {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.work-overlay__media-hint {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.28);
+  opacity: 0.55;
+  transform: scale(0.92);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.work-overlay__media.is-linked .work-overlay__media-hint::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 7px 0 7px 12px;
+  border-color: transparent transparent transparent #fff;
+  transform: translate(-50%, -50%);
+}
+
+.work-overlay__media:not(.is-linked) .work-overlay__media-hint {
+  display: none;
+}
+
+.work-overlay__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.work-overlay__media--strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3px;
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+}
+
+.work-overlay__strip {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  background-size: cover;
+  background-position: center top;
+}
+
+.work-overlay__body {
+  padding: clamp(36px, 5vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.work-overlay__kicker {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.work-overlay__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  white-space: pre-line;
+  hyphens: none;
+  -webkit-hyphens: none;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.work-overlay__text {
+  margin: 20px 0 0;
+  font-size: clamp(15px, 1.35vw, 18px);
+  line-height: 1.5;
+  color: rgba(17, 17, 17, 0.78);
+}
+
+.work-overlay__link {
+  margin-top: 24px;
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: inherit;
+  border-bottom: 1px solid currentColor;
+  text-decoration: none;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 720px) {
+  .work-overlay__panel { grid-template-columns: 1fr; max-height: 92vh; }
+}
+
+/* ——— A Spread ——— */
+.ms-a .spread-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  padding: clamp(36px, 7vh, 72px) 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ms-a .spread-row--flip { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); }
+.ms-a .spread-row--flip .spread-visual { order: 2; }
+.ms-a .spread-row--flip .spread-copy { order: 1; }
+
+.ms-a .spread-visual {
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #111;
+}
+
+.ms-a .spread-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.04);
+  transition: transform 1s var(--ease);
+}
+
+.ms-a .spread-row:hover .spread-visual img { transform: scale(1); }
+
+.ms-a .spread-kicker {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.ms-a .spread-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.8vw, 48px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.ms-a .spread-lead {
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(17, 17, 17, 0.7);
+  max-width: 32em;
+}
+
+.ms-a .spread-go {
+  display: inline-block;
+  margin-top: 22px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 820px) {
+  .ms-a .spread-row,
+  .ms-a .spread-row--flip { grid-template-columns: 1fr; }
+  .ms-a .spread-row--flip .spread-visual,
+  .ms-a .spread-row--flip .spread-copy { order: unset; }
+}
+
+/* ——— B Grid 1/2 ——— */
+.ms-b .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.ms-b .tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+}
+
+.ms-b .tile--end,
+.ms-b .tile--hero { border-right: 0; }
+
+.ms-b .tile--hero {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+}
+
+.ms-b .tile .bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+  transition: transform 1s var(--ease);
+}
+
+.ms-b .tile:hover .bg { transform: scale(1); }
+
+.ms-b .tile .shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 40%, rgba(0,0,0,0.78) 100%);
+}
+
+/* Не .meta — иначе base.css даёт Plex Mono + --mute (полупрозрачный) */
+.ms-b .tile .tile-copy,
+.ms-b .tile .meta {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  color: #fff;
+  font-family: Onest, system-ui, sans-serif;
+  font-size: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.ms-b .tile .kicker {
+  display: block;
+  margin: 0 0 8px;
+  font-family: Onest, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ms-b .tile .name {
+  margin: 0;
+  font-family: Oswald, "Arial Narrow", sans-serif !important;
+  font-weight: 700;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+.ms-b .tile .name.name--stacked {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06em;
+}
+
+.ms-b .tile .name .name-line {
+  display: block;
+  max-width: 100%;
+}
+
+/* вторая строка чуть сдвинута — динамика стека */
+.ms-b .tile .name.name--stacked .name-line:last-child {
+  padding-left: 0.12em;
+  opacity: 0.96;
+}
+
+.ms-b .tile--hero .name {
+  font-size: clamp(32px, 5vw, 56px);
+  color: #fff !important;
+}
+
+.ms-b .tile--hero .name.name--stacked .name-line:last-child {
+  padding-left: 0.18em;
+}
+
+.ms-b .tile .lead { display: none !important; }
+
+/* Вертикальные кейсы: 3 кадра в ряд → горизонтальная плитка */
+.ms-b .tile--strip3 .strip3 {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  background: #111;
+}
+
+.ms-b .tile--strip3 .strip-cell {
+  display: block;
+  background-size: cover;
+  background-position: center top;
+  transform: scale(1.02);
+  transition: transform 1s var(--ease);
+}
+
+.ms-b .tile--strip3:hover .strip-cell { transform: scale(1); }
+
+.ms-b .tile--strip3 .bg { display: none; }
+
+@media (max-width: 720px) {
+  .ms-b .grid { grid-template-columns: 1fr; }
+  .ms-b .tile,
+  .ms-b .tile--end { border-right: 0; }
+}
+
+/* ——— C Layer ——— */
+.ms-c .c-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 2vw, 20px);
+}
+
+.ms-c .c-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  background: #111;
+}
+
+.ms-c .c-card--wide {
+  grid-column: 1 / -1;
+}
+
+.ms-c .c-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.05);
+  transition: transform 1s var(--ease);
+}
+
+.ms-c .c-card:hover img { transform: scale(1); }
+
+.ms-c .c-plate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 48px 18px 18px;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%);
+  transform: translateY(8px);
+  opacity: 0.88;
+  transition: transform 0.45s var(--ease), opacity 0.45s var(--ease);
+}
+
+.ms-c .c-card:hover .c-plate {
+  transform: none;
+  opacity: 1;
+}
+
+.ms-c .c-kicker {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ms-c .c-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.8vw, 36px);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.ms-c .c-card--wide .c-name { font-size: clamp(32px, 5vw, 52px); }
+
+.ms-c .c-lead {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 40em;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.45s var(--ease), opacity 0.35s ease, margin 0.35s ease;
+}
+
+.ms-c .c-card:hover .c-lead {
+  max-height: 6em;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+@media (max-width: 720px) {
+  .ms-c .c-grid { grid-template-columns: 1fr; }
+  .ms-c .c-lead { max-height: 6em; opacity: 1; margin-top: 10px; }
+  .ms-c .c-plate { transform: none; opacity: 1; }
+}
